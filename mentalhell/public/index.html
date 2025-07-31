@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta name="generator" content="Hugo 0.148.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MENTALHELL - MentalHell</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #00ff00;
+            font-family: 'Courier Prime', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow-x: hidden;
+            animation: glitch-bg 0.3s infinite;
+            cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjIiIGhlaWdodD0iMTYiIGZpbGw9IiMwMGZmMDAiLz4KPC9zdmc+'), auto;
+        }
+        
+        @keyframes glitch-bg {
+            0%, 100% { background: #0a0a0a; }
+            2% { background: #0d0a0a; }
+            4% { background: #0a0d0a; }
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+        }
+        
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            animation: glitch-1 0.5s infinite;
+            color: #ff0040;
+            z-index: -1;
+        }
+        
+        .glitch::after {
+            animation: glitch-2 0.5s infinite;
+            color: #00ffff;
+            z-index: -2;
+        }
+        
+        @keyframes glitch-1 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+        
+        @keyframes glitch-2 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); }
+            80% { transform: translate(-2px, -2px); }
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border: 2px solid #00ff00;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            animation: pulse-border 2s infinite;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1:before {
+            content: '>>> ';
+            color: #ff0040;
+            animation: blink 1s infinite;
+        }
+        
+        h1:after {
+            content: ' <<<';
+            color: #ff0040;
+            animation: blink 1s infinite reverse;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        @keyframes pulse-border {
+            0%, 100% { border-color: #00ff00; box-shadow: 0 0 5px #00ff00; }
+            50% { border-color: #ff0040; box-shadow: 0 0 20px #ff0040; }
+        }
+        
+        #terminal {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier Prime', monospace;
+            font-size: 14px;
+            min-height: 300px;
+            max-width: 700px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #terminal-output {
+            color: #00ff00;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        #terminal-input-line {
+            display: flex;
+            align-items: center;
+            color: #00ff00;
+        }
+        
+        #terminal-prompt {
+            color: #00ffff;
+            margin-right: 5px;
+        }
+        
+        #terminal-input {
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            font-family: 'Courier Prime', monospace;
+            font-size: 14px;
+            outline: none;
+            flex: 1;
+        }
+        
+        .terminal-line {
+            margin-bottom: 5px;
+            animation: type-in 0.5s ease-in;
+        }
+        
+        .terminal-error {
+            color: #ff0040;
+        }
+        
+        .terminal-success {
+            color: #00ffff;
+        }
+        
+        .cursor {
+            display: inline-block;
+            background: #00ff00;
+            width: 10px;
+            height: 16px;
+            animation: cursor-blink 1s infinite;
+        }
+        
+        @keyframes cursor-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        @keyframes type-in {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+         
+        body:after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 0, 0.03) 2px,
+                    rgba(0, 255, 0, 0.03) 4px
+                );
+            pointer-events: none;
+            z-index: -1;
+            animation: matrix-scroll 20s linear infinite;
+        }
+        
+        @keyframes matrix-scroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100px); }
+        }
+        
+        .ascii-art {
+            white-space: pre;
+            font-size: 10px;
+            color: #ff0040;
+            margin: 20px 0;
+            animation: flicker 1s infinite;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ascii-art:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.4), transparent);
+            animation: scan 3s infinite;
+        }
+        
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .warning {
+            border: 1px solid #ff0040;
+            background: rgba(255, 0, 64, 0.1);
+            padding: 10px;
+            margin: 20px 0;
+            color: #ff0040;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .warning:before {
+            content: '⚠ ';
+            animation: blink 0.5s infinite;
+        }
+        
+        .warning:after {
+            content: ' ⚠';
+            animation: blink 0.5s infinite reverse;
+        }
+        
+        ::selection {
+            background: #ff0040;
+            color: #000;
+        }
+        
+        @media (max-width: 600px) {
+            body { font-size: 12px; }
+            h1 { font-size: 1.8em; }
+            .ascii-art { font-size: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+<h1 class="glitch">MENTALHELL</h1>
+
+<div class="ascii-art">
+  ███╗   ███╗███████╗███╗   ██╗████████╗ █████╗ ██╗     ██╗  ██╗███████╗██╗     ██╗     
+  ████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔══██╗██║     ██║  ██║██╔════╝██║     ██║     
+  ██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ███████║██║     ███████║█████╗  ██║     ██║     
+  ██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ██╔══██║██║     ██╔══██║██╔══╝  ██║     ██║     
+  ██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ██║  ██║███████╗██║  ██║███████╗███████╗███████╗
+  ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝
+</div>
+
+<div class="warning">
+  INTERNET GARBAGELAND
+</div>
+
+<div id="terminal"></div>
+
+
+
+
+    </div>
+    
+    <script>
+        
+        const terminal = {
+            output: [],
+            commands: {
+                help: () => "Available commands: help, clear, irc, phone, whoami, exit",
+                clear: () => { terminal.output = []; return ""; },
+                irc: () => "IRC SERVER: mentalhell.x.x",
+                phone: () => "PHONE NUMBER: 514.555.5555\nDIALING...\n[LINE BUSY - TRY AGAIN LATER]",
+                whoami: () => "USER: ANONYMOUS\nLOCATION: [REDACTED]\nCLEARANCE: LEVEL_NULL",
+                exit: () => "CONNECTION TERMINATED...\n[PROCESS KILLED]"
+            },
+            
+            init() {
+                const terminalDiv = document.getElementById('terminal');
+                if (!terminalDiv) return;
+                
+                terminalDiv.innerHTML = `
+                    <div id="terminal-output"></div>
+                    <div id="terminal-input-line">
+                        <span id="terminal-prompt">root@mentalhell:~$</span>
+                        <input type="text" id="terminal-input" autofocus>
+                        <span class="cursor"></span>
+                    </div>
+                `;
+                
+                const input = document.getElementById('terminal-input');
+                const output = document.getElementById('terminal-output');
+                
+                
+                this.typeBootSequence();
+                
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        const command = input.value.toLowerCase().trim();
+                        this.executeCommand(command);
+                        input.value = '';
+                    }
+                });
+                
+                
+                document.addEventListener('click', () => input.focus());
+            },
+            
+            typeBootSequence() {
+                const bootMessages = [
+                    "[INITIALIZING SECURE CONNECTION...]",
+                    "[BYPASSING FIREWALL...]",
+                    "[ESTABLISHING ENCRYPTED TUNNEL...]", 
+                    "[CONNECTION ESTABLISHED]",
+                    "[WELCOME TO MENTALHELL NETWORK]",
+                    "",
+                    "Type 'help' for available commands."
+                ];
+                
+                bootMessages.forEach((msg, i) => {
+                    setTimeout(() => {
+                        this.addOutput(msg, i === 4 ? 'terminal-success' : '');
+                    }, i * 800);
+                });
+            },
+            
+            executeCommand(command) {
+                this.addOutput(`root@mentalhell:~$ ${command}`, 'terminal-input-echo');
+                
+                if (this.commands[command]) {
+                    const result = this.commands[command]();
+                    if (result) {
+                        this.addOutput(result, command === 'contact' || command === 'irc' || command === 'phone' ? 'terminal-success' : '');
+                    }
+                    if (command === 'clear') {
+                        document.getElementById('terminal-output').innerHTML = '';
+                    }
+                } else if (command) {
+                    this.addOutput(`bash: ${command}: command not found`, 'terminal-error');
+                }
+            },
+            
+            addOutput(text, className = '') {
+                const output = document.getElementById('terminal-output');
+                const lines = text.split('\n');
+                lines.forEach(line => {
+                    const div = document.createElement('div');
+                    div.textContent = line;
+                    div.className = `terminal-line ${className}`;
+                    output.appendChild(div);
+                });
+                output.scrollTop = output.scrollHeight;
+            }
+        };
+        
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const glitchElements = document.querySelectorAll('.glitch');
+            glitchElements.forEach(el => {
+                el.setAttribute('data-text', el.textContent);
+            });
+            
+            
+            setTimeout(() => terminal.init(), 500);
+        });
+        
+        
+        document.addEventListener('mousemove', function(e) {
+            if (Math.random() > 0.9) {
+                const trail = document.createElement('div');
+                trail.style.position = 'fixed';
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                trail.style.width = '2px';
+                trail.style.height = '2px';
+                trail.style.background = '#00ff00';
+                trail.style.pointerEvents = 'none';
+                trail.style.zIndex = '1000';
+                document.body.appendChild(trail);
+                
+                setTimeout(() => {
+                    trail.remove();
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
